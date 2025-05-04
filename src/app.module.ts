@@ -7,17 +7,15 @@ import { KnexModule } from './knex/knex.module';
 import { UsersController } from './modules/users/users.controller';
 import { UsersModule } from './modules/users/users.module';
 import { UsersService } from './modules/users/users.service';
-
-
-
+import { OrganizationModule } from './modules/organization/organization.module';
 
 @Module({
   imports: [
     KnexModule,
     JwtModule.register({}),
     AuthModule,
-    UsersModule
-
+    UsersModule,
+    OrganizationModule,
   ],
   controllers: [AppController],
   providers: [AppService],

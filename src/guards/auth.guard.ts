@@ -1,31 +1,44 @@
-import { CanActivate, ExecutionContext, Inject, Injectable, UnauthorizedException } from '@nestjs/common';
+import {
+  CanActivate,
+  ExecutionContext,
+  Inject,
+  Injectable,
+  UnauthorizedException,
+} from '@nestjs/common';
 import { JwtService } from '@nestjs/jwt';
 
 @Injectable()
 export class AuthorizationGuard implements CanActivate {
-	@Inject() private readonly jwtService: JwtService;
+  @Inject() private readonly jwtService: JwtService;
 
-	async canActivate(context: ExecutionContext): Promise<boolean> {
-		const request = context.switchToHttp().getRequest();
-		let tokenId = request.headers.authorization;
-		if (!tokenId) {
-			throw new UnauthorizedException();
-		}
-		try {
-			await this.jwtService.verifyAsync(tokenId, {
-				secret: process.env.JWT_SECRET,
-			});
-		} catch (e) {
-			throw new UnauthorizedException();
-		}
+  async canActivate(context: ExecutionContext): Promise<boolean> {
+    const request = context.switchToHttp().getRequest();
+    let tokenId = request.headers.authorization;
+    console.log(request.headers);
 
-		const decodeToken: any = await this.jwtService.decode(tokenId);
-		if (!decodeToken) {
-			throw new UnauthorizedException();
-		}
+    if (!tokenId) {
+      throw new UnauthorizedException();
+    }
+    try {
+      if (tokenId.startsWith('Bearer ')) {
+        tokenId = tokenId.substr('Bearer '.length);
+      }
+      console.log(tokenId);
 
-		request.user = { ...decodeToken, access_token: tokenId };
+      await this.jwtService.verifyAsync(tokenId, {
+        secret: process.env.JWT_SECRET,
+      });
+    } catch (e) {
+      throw new UnauthorizedException();
+    }
 
-		return true;
-	}
+    const decodeToken: any = await this.jwtService.decode(tokenId);
+    if (!decodeToken) {
+      throw new UnauthorizedException();
+    }
+
+    request.user = { ...decodeToken, access_token: tokenId };
+
+    return true;
+  }
 }

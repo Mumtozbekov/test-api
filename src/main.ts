@@ -2,23 +2,34 @@ import { NestFactory } from '@nestjs/core';
 import { AppModule } from './app.module';
 import { SwaggerModule, DocumentBuilder } from '@nestjs/swagger';
 
-import * as dotenv from 'dotenv'
-
+import * as dotenv from 'dotenv';
 
 async function bootstrap() {
   const app = await NestFactory.create(AppModule);
 
   const config = new DocumentBuilder()
-  .setTitle('Test api')
-  .setDescription('The test API description')
-  .setVersion('1.0')
-  .addTag('test')
-  .build();
-const documentFactory = () => SwaggerModule.createDocument(app, config);
-SwaggerModule.setup('api', app, documentFactory);
+    .setTitle('Test api')
+    .setDescription('The test API description')
+    .setVersion('1.0')
+    .addTag('auth')
+    .addBearerAuth(
+      {
+        name: 'authorization',
+        type: 'apiKey',
+        in: 'header',
+      },
+      'authorization',
+    )
+    .build();
+  const documentFactory = () => SwaggerModule.createDocument(app, config);
+  SwaggerModule.setup('api', app, documentFactory, {
+    swaggerOptions: {
+      persistAuthorization: true,
+    },
+  });
 
-  await app.listen(process.env.PORT ?? 3000,()=>{
-    dotenv.config()
+  await app.listen(process.env.PORT ?? 3000, () => {
+    dotenv.config();
   });
 }
 bootstrap();

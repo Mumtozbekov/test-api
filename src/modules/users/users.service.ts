@@ -4,23 +4,18 @@ import { CreateUserDto } from 'src/modules/users/dtos/createUserDto';
 
 @Injectable()
 export class UsersService {
+  @Inject() repo: UsersRepo;
 
-    @Inject() repo: UsersRepo;
+  async getUsersList() {
+    const data = await this.repo.getUserList();
+    return { data };
+  }
 
-    async getUsersList() {
-        const data = await this.repo.getUserList()
-        return {data}
-    }
+  async insertUser(payload: CreateUserDto) {
+    const user = (await this.repo.insertUser(payload)).shift();
 
-    async insertUser(payload: CreateUserDto){
-        const user = (await this.repo.insertUser(payload)).shift();
-
-        console.log(user);
-        
-        return {
-            id: user.id
-        }
-
-    }
-
+    return {
+      id: user.id,
+    };
+  }
 }
