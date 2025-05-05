@@ -15,7 +15,7 @@ import { ApiBearerAuth, ApiParam, ApiQuery } from '@nestjs/swagger';
 import { AuthorizationGuard } from 'src/guards/auth.guard';
 import { RolesGuard } from 'src/guards/roles.guard';
 import { RequiredRoles } from 'src/decorators/roles.decorator';
-import { Roles } from '../auth/enum/roles';
+import { Roles } from '../../enum/roles';
 
 @Controller('organization')
 @ApiBearerAuth('authorization')

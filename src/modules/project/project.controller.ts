@@ -11,7 +11,7 @@ import { ApiBearerAuth, ApiParam } from '@nestjs/swagger';
 import { RequiredRoles } from 'src/decorators/roles.decorator';
 import { AuthorizationGuard } from 'src/guards/auth.guard';
 import { RolesGuard } from 'src/guards/roles.guard';
-import { Roles } from '../auth/enum/roles';
+import { Roles } from '../../enum/roles';
 import { CreateProjectDto } from 'src/modules/project/dtos/createProjectDto';
 import { CurrentUser } from 'src/decorators/user.decorator';
 import { ICurrentUser } from 'src/interfaces/currentUser';
