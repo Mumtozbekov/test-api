@@ -10,6 +10,7 @@ import { UsersService } from './modules/users/users.service';
 import { OrganizationModule } from './modules/organization/organization.module';
 import { OrgUserModule } from './modules/org-user/org-user.module';
 import { ProjectModule } from './modules/project/project.module';
+import { TaskModule } from './modules/task/task.module';
 
 @Module({
   imports: [
@@ -20,6 +21,7 @@ import { ProjectModule } from './modules/project/project.module';
     OrganizationModule,
     OrgUserModule,
     ProjectModule,
+    TaskModule,
   ],
   controllers: [AppController],
   providers: [AppService],
