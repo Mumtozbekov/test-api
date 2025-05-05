@@ -9,6 +9,7 @@ import { UsersModule } from './modules/users/users.module';
 import { UsersService } from './modules/users/users.service';
 import { OrganizationModule } from './modules/organization/organization.module';
 import { OrgUserModule } from './modules/org-user/org-user.module';
+import { ProjectModule } from './modules/project/project.module';
 
 @Module({
   imports: [
@@ -18,6 +19,7 @@ import { OrgUserModule } from './modules/org-user/org-user.module';
     UsersModule,
     OrganizationModule,
     OrgUserModule,
+    ProjectModule,
   ],
   controllers: [AppController],
   providers: [AppService],

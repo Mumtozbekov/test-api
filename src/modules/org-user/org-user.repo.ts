@@ -29,7 +29,6 @@ export class OrgUserRepo {
         'users.id as user_id',
         'users.name as user_name',
         'users.username as user_username',
-        'users.password as user_password',
         'users.created_by as user_created_by',
 
         'organization.id as org_id',
@@ -48,7 +47,6 @@ export class OrgUserRepo {
             id: row.user_id,
             name: row.user_name,
             username: row.user_username,
-            password: row.user_password,
             created_by: row.user_created_by,
           },
           organization: {
