@@ -7,11 +7,15 @@ export class OrganizationRepo {
   @Inject('KnexConnection') private readonly knex: Knex;
 
   insert({ name, created_by }) {
-    return this.knex('users')
+    return this.knex('organization')
       .insert({
         name: name,
         created_by: created_by,
       })
       .returning('*');
+  }
+
+  getOrganization(id: number) {
+    return this.knex('organization').where('id', id).first();
   }
 }

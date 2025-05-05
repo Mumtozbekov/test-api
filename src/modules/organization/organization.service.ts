@@ -13,4 +13,8 @@ export class OrganizationService {
       created_by: user.id,
     });
   }
+
+  getOrganizationById(id: number) {
+    return this.repo.getOrganization(id);
+  }
 }

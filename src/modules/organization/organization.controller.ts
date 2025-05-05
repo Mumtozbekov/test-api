@@ -1,9 +1,17 @@
-import { Body, Controller, Inject, Post, UseGuards } from '@nestjs/common';
+import {
+  Body,
+  Controller,
+  Get,
+  Inject,
+  Param,
+  Post,
+  UseGuards,
+} from '@nestjs/common';
 import { OrganizationService } from './organization.service';
 import { CreateOrganizationDto } from './dtos/createOrganizationDto';
 import { CurrentUser } from 'src/decorators/user.decorator';
 import { ICurrentUser } from 'src/interfaces/currentUser';
-import { ApiBearerAuth } from '@nestjs/swagger';
+import { ApiBearerAuth, ApiParam, ApiQuery } from '@nestjs/swagger';
 import { AuthorizationGuard } from 'src/guards/auth.guard';
 import { RolesGuard } from 'src/guards/roles.guard';
 import { RequiredRoles } from 'src/decorators/roles.decorator';
@@ -24,5 +32,11 @@ export class OrganizationController {
     console.log(user);
 
     return this.service.createOrganization(user, payload);
+  }
+
+  @Get(':id')
+  @ApiParam({ name: 'id', type: Number })
+  getOrganization(@Param() params: any) {
+    return this.service.getOrganizationById(params.id);
   }
 }
